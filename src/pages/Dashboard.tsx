@@ -100,21 +100,21 @@ export default function Dashboard() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">智慧农业决策驾驶舱</h1>
-          <p className="text-slate-500 mt-1">实时掌握市场价格，智能决策辅助</p>
+          <h1 className="text-xl md:text-2xl font-bold text-slate-800">智慧农业决策驾驶舱</h1>
+          <p className="text-slate-500 mt-1 text-sm">实时掌握市场价格，智能决策辅助</p>
         </div>
-        <div className="flex items-center space-x-2 bg-white px-4 py-2 rounded-lg shadow-sm">
+        <div className="flex items-center space-x-2 bg-white px-3 md:px-4 py-2 rounded-lg shadow-sm text-xs md:text-sm">
           <Calendar className="w-4 h-4 text-slate-400" />
-          <span className="text-sm text-slate-600">数据更新时间: 2026-02-16 11:30</span>
+          <span className="text-slate-600 whitespace-nowrap">2026-02-16 11:30</span>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon
           return (
@@ -142,17 +142,17 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {/* Price Chart */}
-        <div className="col-span-2 bg-white rounded-xl p-6 shadow-sm border border-slate-100">
-          <div className="flex items-center justify-between mb-4">
+        <div className="md:col-span-2 bg-white rounded-xl p-4 md:p-6 shadow-sm border border-slate-100">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
             <h3 className="font-semibold text-slate-800">价格指数可视化看板</h3>
             <div className="flex space-x-2">
               {['近7天', '近30天', '全年'].map((range) => (
                 <button
                   key={range}
                   onClick={() => setTimeRange(range)}
-                  className={`px-3 py-1 text-sm rounded-lg ${
+                  className={`px-3 py-1 text-xs md:text-sm rounded-lg ${
                     timeRange === range
                       ? 'bg-emerald-500 text-white'
                       : 'text-slate-500 hover:bg-slate-100'
@@ -163,7 +163,7 @@ export default function Dashboard() {
               ))}
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={350}>
+          <ResponsiveContainer width="100%" height={250}>
             <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
               <XAxis dataKey="name" stroke="#64748b" fontSize={12} />
@@ -199,10 +199,10 @@ export default function Dashboard() {
         </div>
 
         {/* Phenology Alert */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-100">
-          <h3 className="font-semibold text-slate-800 mb-4">物候节点智能提醒</h3>
+        <div className="bg-white rounded-xl p-4 md:p-6 shadow-sm border border-slate-100">
+          <h3 className="font-semibold text-slate-800 mb-3 md:mb-4">物候节点智能提醒</h3>
 
-          <div className="bg-gradient-to-br from-emerald-50 to-cyan-50 rounded-xl p-4 mb-4">
+          <div className="bg-gradient-to-br from-emerald-50 to-cyan-50 rounded-xl p-3 md:p-4 mb-3 md:mb-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-slate-500">当前物候期</span>
               <span className={`px-2 py-1 text-xs rounded-full ${
@@ -243,7 +243,7 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {quickActions.map((action) => {
           const Icon = action.icon
           return (

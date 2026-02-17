@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import Dashboard from './pages/Dashboard'
 import AssessmentCenter from './pages/AssessmentCenter'
@@ -10,10 +10,14 @@ import UserCenter from './pages/UserCenter'
 import AdminPanel from './pages/AdminPanel'
 import Sidebar from './components/Sidebar'
 import TopBar from './components/TopBar'
+import MobileNav, { MobileHeader, MobileSidebar } from './components/MobileNav'
+import { useIsMobile } from './hooks/use-mobile'
 import './index.css'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const isMobile = useIsMobile()
 
   const renderPage = () => {
     switch (currentPage) {
@@ -39,14 +43,26 @@ function App() {
   return (
     <BrowserRouter>
       <div className="flex h-screen bg-slate-50">
-        <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        {!isMobile && <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />}
+        
         <div className="flex-1 flex flex-col overflow-hidden">
-          <TopBar />
-          <main className="flex-1 overflow-y-auto p-6">
+          {isMobile && <MobileHeader onMenuClick={() => setSidebarOpen(true)} />}
+          {!isMobile && <TopBar />}
+          
+          <main className={`flex-1 overflow-y-auto ${isMobile ? 'pt-14 pb-20 px-4' : 'p-6'}`}>
             {renderPage()}
           </main>
         </div>
-        <Toaster position="top-right" />
+
+        {isMobile && <MobileNav currentPage={currentPage} setCurrentPage={setCurrentPage} />}
+        <MobileSidebar 
+          isOpen={sidebarOpen} 
+          onClose={() => setSidebarOpen(false)} 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+        
+        <Toaster position={isMobile ? 'top-center' : 'top-right'} />
       </div>
     </BrowserRouter>
   )
