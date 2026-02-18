@@ -1,4 +1,4 @@
-import { supabase } from '../supabase'
+import { supabase } from './supabase'
 
 export interface AnalysisResult {
   ripenessScore: number
@@ -10,17 +10,11 @@ export interface AnalysisResult {
 }
 
 export async function analyzeImageWithAI(imageUrl: string): Promise<AnalysisResult> {
-  const response = await fetch(
-    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-image`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-      },
-      body: JSON.stringify({ image_url: imageUrl }),
-    }
-  )
+  const response = await fetch(`/api/analyze-image`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ image_url: imageUrl }),
+  })
 
   if (!response.ok) {
     const error = await response.json()
