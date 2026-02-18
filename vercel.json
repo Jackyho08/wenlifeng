@@ -3,5 +3,6 @@
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ],
   "buildCommand": "npm run build",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "outputDirectory": "dist"
 }
