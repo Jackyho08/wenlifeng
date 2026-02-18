@@ -42,8 +42,10 @@ import {
   Check,
   X,
   ArrowRight,
-  BarChart3
+  BarChart3,
+  Smartphone
 } from 'lucide-react'
+import ImageUpload from '@/components/ImageUpload'
 
 // ==================== 多光谱采集设备配置 ====================
 interface SensorConfig {
@@ -155,6 +157,7 @@ export default function AssessmentCenter() {
   const [showHeatmap, setShowHeatmap] = useState(false)
   const [isStreaming, setIsStreaming] = useState(true)
   const [selectedSpectralBand, setSelectedSpectralBand] = useState<'RGB' | 'NIR' | 'Thermal' | 'NDVI'>('RGB')
+  const [showAIModal, setShowAIModal] = useState(false)
 
   // 统计数据
   const totalFruits = mockDetections.length
@@ -850,6 +853,13 @@ export default function AssessmentCenter() {
             <Camera className="w-4 h-4" />
             <span>开始采集</span>
           </button>
+          <button 
+            onClick={() => setShowAIModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-lg hover:shadow-lg"
+          >
+            <Smartphone className="w-4 h-4" />
+            <span>AI拍照评估</span>
+          </button>
           <button className="flex items-center space-x-2 px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50">
             <Download className="w-4 h-4" />
             <span>导出数据</span>
@@ -866,6 +876,23 @@ export default function AssessmentCenter() {
           <span>模型版本: {mockEdgeStatus.modelVersion}</span>
         </div>
       </div>
+
+      {/* AI 拍照评估弹窗 */}
+      {showAIModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-4 border-b">
+              <h3 className="font-semibold text-lg">AI 拍照评估</h3>
+              <button onClick={() => setShowAIModal(false)} className="p-1 hover:bg-slate-100 rounded">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4">
+              <ImageUpload />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
