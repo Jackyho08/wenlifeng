@@ -65,6 +65,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@vercel/node": "^3.0.0",
     "@eslint/js": "^9.15.0",
     "@types/node": "^22.10.7",
     "@types/react": "^18.3.12",
